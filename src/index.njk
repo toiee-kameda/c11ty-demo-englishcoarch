@@ -1,13 +1,941 @@
 ---
 layout: base.njk
-title: cc11ty
+title: SLA英語コーチング | あなただけの学習メソッドで英語を習得
+description: 第二言語獲得（SLA）研究に基づく、完全パーソナライズの英語コーチングサービス。忙しい社会人でも続けられる、あなただけの学習メソッドを設計します。
 ---
-<h1>cc11ty</h1>
-<p>Eleventy (ESM) サイトへようこそ。</p>
 
-<h2>Posts</h2>
-<ul>
-  {%- for post in collections.post | reverse -%}
-    <li><a href="{{ post.url }}">{{ post.data.title }}</a></li>
-  {%- endfor -%}
-</ul>
+<style>
+  /* ===== ヒーロー背景 ===== */
+  .hero-bg {
+    background-image: linear-gradient(
+      135deg,
+      rgba(10, 25, 40, 0.88) 0%,
+      rgba(26, 58, 82, 0.80) 50%,
+      rgba(15, 38, 56, 0.90) 100%
+    ),
+    url('https://images.unsplash.com/photo-1762341115358-44dd9d3c49cc?w=1920&q=80&fm=webp&fit=crop');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* ===== FAQ ===== */
+  .faq-item details > summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .faq-item details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* ===== ステップコネクター ===== */
+  .step-connector {
+    position: relative;
+  }
+  .step-connector::after {
+    content: '';
+    position: absolute;
+    top: 2.5rem;
+    left: 50%;
+    width: 2px;
+    height: calc(100% + 2rem);
+    background: linear-gradient(to bottom, var(--color-accent-light), transparent);
+  }
+  @media (min-width: 768px) {
+    .step-connector::after { display: none; }
+  }
+
+  /* ===== 料金カード（推奨） ===== */
+  .plan-recommended {
+    position: relative;
+    transform: scale(1.04);
+    z-index: 1;
+  }
+  @media (max-width: 767px) {
+    .plan-recommended { transform: scale(1); }
+  }
+</style>
+
+
+<!-- =====================================================
+     1. ヒーローセクション
+===================================================== -->
+<section id="hero" class="hero-bg min-h-screen flex items-center relative overflow-hidden -mt-16 lg:-mt-20">
+  <!-- 装飾：右下のぼかし円 -->
+  <div class="absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10"
+       style="background: radial-gradient(circle, var(--color-accent-light), transparent); transform: translate(30%, 30%);"></div>
+
+  <div class="max-w-6xl mx-auto px-6 py-32 lg:py-40 relative z-10">
+    <div class="max-w-2xl">
+      <!-- 小見出し -->
+      <p class="section-label text-accent-light mb-4 animate__animated animate__fadeInDown"
+         style="color: var(--color-accent-light);">
+        Science-Based English Coaching
+      </p>
+
+      <!-- キャッチコピー -->
+      <h1 class="font-serif text-white text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate__animated animate__fadeInUp">
+        英語の挫折は、<br>
+        <span style="color: var(--color-warm);">メソッドが原因</span>でした。
+      </h1>
+
+      <!-- サブコピー -->
+      <p class="text-white/80 text-lg md:text-xl leading-relaxed mb-10 animate__animated animate__fadeIn animate__delay-1s">
+        第二言語獲得（SLA）の研究に基づき、<br class="hidden md:block">
+        あなたの目的・環境・レベルに完全特化した<br class="hidden md:block">
+        英語学習メソッドを設計します。
+      </p>
+
+      <!-- CTA ボタン -->
+      <div class="flex flex-col sm:flex-row gap-4 animate__animated animate__fadeInUp animate__delay-1s">
+        <a href="#contact"
+           class="inline-flex items-center justify-center gap-2 font-bold px-8 py-4 rounded-full text-base transition-all hover:opacity-90 hover:scale-105"
+           style="background-color: var(--color-warm); color: var(--color-primary-dark);">
+          <i data-lucide="calendar" class="w-5 h-5"></i>
+          無料相談を申し込む（30分）
+        </a>
+        <a href="#features"
+           class="inline-flex items-center justify-center gap-2 font-medium px-8 py-4 rounded-full text-base border text-white transition-all hover:bg-white/10"
+           style="border-color: rgba(255,255,255,0.4);">
+          サービスを詳しく見る
+          <i data-lucide="arrow-down" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+      <!-- 信頼バッジ -->
+      <div class="mt-12 flex flex-wrap gap-6 items-center">
+        <div class="flex items-center gap-2 text-white/70 text-sm">
+          <i data-lucide="shield-check" class="w-4 h-4" style="color: var(--color-accent-light);"></i>
+          <span>SLA研究に基づくメソッド</span>
+        </div>
+        <div class="flex items-center gap-2 text-white/70 text-sm">
+          <i data-lucide="wifi" class="w-4 h-4" style="color: var(--color-accent-light);"></i>
+          <span>完全オンライン</span>
+        </div>
+        <div class="flex items-center gap-2 text-white/70 text-sm">
+          <i data-lucide="user-check" class="w-4 h-4" style="color: var(--color-accent-light);"></i>
+          <span>完全パーソナライズ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- スクロールダウン -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50 text-xs animate__animated animate__fadeIn animate__delay-2s">
+    <span>SCROLL</span>
+    <i data-lucide="chevron-down" class="w-5 h-5 animate-bounce"></i>
+  </div>
+</section>
+
+
+<!-- =====================================================
+     2. 共感セクション（お悩みありませんか？）
+===================================================== -->
+<section id="pain" class="py-24 lg:py-32" style="background-color: var(--color-surface);">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- セクションヘッダー -->
+    <div class="text-center mb-16" data-aos="fade-up">
+      <p class="section-label mb-3">こんなお悩みありませんか？</p>
+      <h2 class="font-serif text-3xl md:text-4xl font-bold" style="color: var(--color-primary);">
+        英語学習の「あるある」な壁
+      </h2>
+      <p class="mt-4 text-text-muted max-w-xl mx-auto">
+        多くの社会人が同じ悩みを繰り返しています。<br>それはあなたの意志の問題ではありません。
+      </p>
+    </div>
+
+    <!-- 悩みカード -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 悩み1 -->
+      <div class="rounded-2xl p-6 border border-surface-2 bg-white card-hover" data-aos="fade-up" data-aos-delay="0">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="refresh-ccw" class="w-6 h-6" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">「また挫折してしまった」</h3>
+        <p class="text-text-muted text-sm leading-relaxed">
+          英会話スクール、アプリ、YouTube…始めるたびに続かない。モチベーションが続かないのは、自分に合っていない方法だからかもしれません。
+        </p>
+      </div>
+
+      <!-- 悩み2 -->
+      <div class="rounded-2xl p-6 border border-surface-2 bg-white card-hover" data-aos="fade-up" data-aos-delay="100">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="help-circle" class="w-6 h-6" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">「何から始めればいいかわからない」</h3>
+        <p class="text-text-muted text-sm leading-relaxed">
+          情報があふれていて、何が正しいのか判断できない。英語学習には正しい順序と方法があります。
+        </p>
+      </div>
+
+      <!-- 悩み3 -->
+      <div class="rounded-2xl p-6 border border-surface-2 bg-white card-hover" data-aos="fade-up" data-aos-delay="200">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="clock" class="w-6 h-6" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">「忙しくて時間がとれない」</h3>
+        <p class="text-text-muted text-sm leading-relaxed">
+          仕事が忙しく、まとまった学習時間が確保できない。隙間時間と日常に組み込める学習設計が必要です。
+        </p>
+      </div>
+
+      <!-- 悩み4 -->
+      <div class="rounded-2xl p-6 border border-surface-2 bg-white card-hover" data-aos="fade-up" data-aos-delay="0">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="message-circle-off" class="w-6 h-6" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">「スクールに通ったのに話せない」</h3>
+        <p class="text-text-muted text-sm leading-relaxed">
+          高いお金を払って英会話スクールに通ったのに、実際の会話では詰まってしまう。会話力は別途設計が必要です。
+        </p>
+      </div>
+
+      <!-- 悩み5 -->
+      <div class="rounded-2xl p-6 border border-surface-2 bg-white card-hover" data-aos="fade-up" data-aos-delay="100">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="book-x" class="w-6 h-6" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">「洋書・海外記事が読めない」</h3>
+        <p class="text-text-muted text-sm leading-relaxed">
+          英会話だけでなく、洋書や海外のニュースをスラスラ読めるようになりたい。リーディング力も体系的に伸ばせます。
+        </p>
+      </div>
+
+      <!-- 悩み6 -->
+      <div class="rounded-2xl p-6 border border-surface-2 bg-white card-hover" data-aos="fade-up" data-aos-delay="200">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="ear" class="w-6 h-6" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2" style="color: var(--color-primary);">「英語が聞き取れない」</h3>
+        <p class="text-text-muted text-sm leading-relaxed">
+          映画やドラマを字幕なしで楽しみたい。ネイティブのスピードについていけない。リスニング力には専用のトレーニングが必要です。
+        </p>
+      </div>
+
+    </div>
+
+    <!-- 解決メッセージ -->
+    <div class="mt-16 text-center" data-aos="fade-up">
+      <p class="text-xl md:text-2xl font-serif font-bold" style="color: var(--color-primary);">
+        その悩み、すべて<span style="color: var(--color-accent);">科学的なアプローチ</span>で解決できます。
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =====================================================
+     3. 選ばれる理由（SLA × パーソナライズ）
+===================================================== -->
+<section id="features" class="py-24 lg:py-32 bg-primary-grad text-white">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- セクションヘッダー -->
+    <div class="text-center mb-16" data-aos="fade-up">
+      <p class="section-label mb-3" style="color: var(--color-accent-light);">Why Choose Us</p>
+      <h2 class="font-serif text-3xl md:text-4xl font-bold">
+        このサービスが選ばれる理由
+      </h2>
+      <p class="mt-4 text-white/70 max-w-xl mx-auto">
+        一般的な英会話スクールとは根本的に異なります。<br>
+        科学と個別最適化が、あなたの英語習得を加速させます。
+      </p>
+    </div>
+
+    <!-- 特長グリッド -->
+    <div class="grid md:grid-cols-2 gap-8 mb-16">
+
+      <!-- 特長1: SLA -->
+      <div class="rounded-2xl p-8 border border-white/10 bg-white/5 card-hover" data-aos="fade-right">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
+               style="background-color: rgba(74, 143, 168, 0.3);">
+            <i data-lucide="flask-conical" class="w-7 h-7" style="color: var(--color-accent-light);"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl mb-3">SLA研究に基づくメソッド</h3>
+            <p class="text-white/70 leading-relaxed text-sm">
+              インプット仮説（クラッシェン）、インターアクション仮説、習慣形成理論など、
+              言語習得科学の知見を学習設計に組み込みます。
+              「なんとなく続ける」ではなく、理論的な根拠のある方法で確実に上達します。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 特長2: パーソナライズ -->
+      <div class="rounded-2xl p-8 border border-white/10 bg-white/5 card-hover" data-aos="fade-left">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
+               style="background-color: rgba(74, 143, 168, 0.3);">
+            <i data-lucide="fingerprint" class="w-7 h-7" style="color: var(--color-accent-light);"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl mb-3">完全パーソナライズ設計</h3>
+            <p class="text-white/70 leading-relaxed text-sm">
+              目的・目標・現在のレベル・生活環境・使える時間と道具を徹底分析。
+              一般的なカリキュラムではなく、あなただけの学習プランを0から設計します。
+              Aさんに合う方法がBさんに合うとは限りません。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 特長3: コーチング -->
+      <div class="rounded-2xl p-8 border border-white/10 bg-white/5 card-hover" data-aos="fade-right" data-aos-delay="100">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
+               style="background-color: rgba(74, 143, 168, 0.3);">
+            <i data-lucide="users" class="w-7 h-7" style="color: var(--color-accent-light);"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl mb-3">継続と習慣化を伴走サポート</h3>
+            <p class="text-white/70 leading-relaxed text-sm">
+              「わかる」と「続ける」は別物。定期的なセッションで進捗確認・計画調整を行い、
+              学習の習慣化まで一緒に作り上げます。一人で続けることの難しさを、コーチが解決します。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 特長4: オンライン -->
+      <div class="rounded-2xl p-8 border border-white/10 bg-white/5 card-hover" data-aos="fade-left" data-aos-delay="100">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
+               style="background-color: rgba(74, 143, 168, 0.3);">
+            <i data-lucide="globe" class="w-7 h-7" style="color: var(--color-accent-light);"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl mb-3">完全オンライン・場所を選ばない</h3>
+            <p class="text-white/70 leading-relaxed text-sm">
+              スクールに通う必要はありません。自宅でも、出張先でも、スマホからでもセッションに参加可能。
+              忙しいあなたのライフスタイルに合わせてスケジュールを調整します。
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 4技能対応バッジ -->
+    <div class="rounded-2xl border border-white/10 bg-white/5 p-8" data-aos="fade-up">
+      <p class="text-center text-white/70 text-sm mb-6">英語の4技能、すべてに対応します</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-3"
+               style="background-color: rgba(200, 169, 126, 0.2);">
+            <i data-lucide="mic" class="w-6 h-6" style="color: var(--color-warm);"></i>
+          </div>
+          <p class="font-bold text-sm">スピーキング</p>
+          <p class="text-white/50 text-xs mt-1">会話・表現力</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-3"
+               style="background-color: rgba(200, 169, 126, 0.2);">
+            <i data-lucide="headphones" class="w-6 h-6" style="color: var(--color-warm);"></i>
+          </div>
+          <p class="font-bold text-sm">リスニング</p>
+          <p class="text-white/50 text-xs mt-1">ネイティブ速度の理解</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-3"
+               style="background-color: rgba(200, 169, 126, 0.2);">
+            <i data-lucide="book-open" class="w-6 h-6" style="color: var(--color-warm);"></i>
+          </div>
+          <p class="font-bold text-sm">リーディング</p>
+          <p class="text-white/50 text-xs mt-1">洋書・海外記事</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-3"
+               style="background-color: rgba(200, 169, 126, 0.2);">
+            <i data-lucide="pen-line" class="w-6 h-6" style="color: var(--color-warm);"></i>
+          </div>
+          <p class="font-bold text-sm">ライティング</p>
+          <p class="text-white/50 text-xs mt-1">メール・文章表現</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =====================================================
+     4. サービスの流れ
+===================================================== -->
+<section id="flow" class="py-24 lg:py-32" style="background-color: var(--color-surface);">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- セクションヘッダー -->
+    <div class="text-center mb-16" data-aos="fade-up">
+      <p class="section-label mb-3">How It Works</p>
+      <h2 class="font-serif text-3xl md:text-4xl font-bold" style="color: var(--color-primary);">
+        サービスの流れ
+      </h2>
+      <p class="mt-4 text-text-muted max-w-xl mx-auto">
+        無料相談から始まり、あなただけの学習プランを設計します。
+      </p>
+    </div>
+
+    <!-- ステップ -->
+    <div class="grid md:grid-cols-5 gap-0 md:gap-4 items-start">
+
+      <!-- ステップ1 -->
+      <div class="flex flex-col items-center text-center step-connector pb-8 md:pb-0" data-aos="fade-up" data-aos-delay="0">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-lg"
+             style="background: linear-gradient(135deg, var(--color-accent), var(--color-primary-light));">
+          1
+        </div>
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-3"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="calendar-check" class="w-5 h-5" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-base mb-2" style="color: var(--color-primary);">無料相談</h3>
+        <p class="text-text-muted text-xs leading-relaxed">
+          30分のオンラインセッション。現状の課題と目標をヒアリングします。
+        </p>
+      </div>
+
+      <!-- 矢印（デスクトップ） -->
+      <div class="hidden md:flex items-center justify-center mt-8" data-aos="fade-up" data-aos-delay="50">
+        <i data-lucide="chevron-right" class="w-6 h-6" style="color: var(--color-accent-light);"></i>
+      </div>
+
+      <!-- ステップ2 -->
+      <div class="flex flex-col items-center text-center step-connector pb-8 md:pb-0" data-aos="fade-up" data-aos-delay="100">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-lg"
+             style="background: linear-gradient(135deg, var(--color-accent), var(--color-primary-light));">
+          2
+        </div>
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-3"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="scan-search" class="w-5 h-5" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-base mb-2" style="color: var(--color-primary);">徹底分析</h3>
+        <p class="text-text-muted text-xs leading-relaxed">
+          目的・レベル・環境・使える時間を分析。最適メソッドを特定します。
+        </p>
+      </div>
+
+      <!-- 矢印（デスクトップ） -->
+      <div class="hidden md:flex items-center justify-center mt-8" data-aos="fade-up" data-aos-delay="150">
+        <i data-lucide="chevron-right" class="w-6 h-6" style="color: var(--color-accent-light);"></i>
+      </div>
+
+      <!-- ステップ3 -->
+      <div class="flex flex-col items-center text-center step-connector pb-8 md:pb-0" data-aos="fade-up" data-aos-delay="200">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-lg"
+             style="background: linear-gradient(135deg, var(--color-accent), var(--color-primary-light));">
+          3
+        </div>
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-3"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="clipboard-list" class="w-5 h-5" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-base mb-2" style="color: var(--color-primary);">プラン設計</h3>
+        <p class="text-text-muted text-xs leading-relaxed">
+          あなただけの学習ロードマップを設計。教材・学習量・スケジュールを決定します。
+        </p>
+      </div>
+
+      <!-- 矢印（デスクトップ） -->
+      <div class="hidden md:flex items-center justify-center mt-8" data-aos="fade-up" data-aos-delay="250">
+        <i data-lucide="chevron-right" class="w-6 h-6" style="color: var(--color-accent-light);"></i>
+      </div>
+
+      <!-- ステップ4 -->
+      <div class="flex flex-col items-center text-center step-connector pb-8 md:pb-0" data-aos="fade-up" data-aos-delay="300">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-lg"
+             style="background: linear-gradient(135deg, var(--color-accent), var(--color-primary-light));">
+          4
+        </div>
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-3"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="play-circle" class="w-5 h-5" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-base mb-2" style="color: var(--color-primary);">学習スタート</h3>
+        <p class="text-text-muted text-xs leading-relaxed">
+          プランに沿って学習を開始。日々のタスクは具体的で迷わない設計です。
+        </p>
+      </div>
+
+      <!-- 矢印（デスクトップ） -->
+      <div class="hidden md:flex items-center justify-center mt-8" data-aos="fade-up" data-aos-delay="350">
+        <i data-lucide="chevron-right" class="w-6 h-6" style="color: var(--color-accent-light);"></i>
+      </div>
+
+      <!-- ステップ5 -->
+      <div class="flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="400">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-lg"
+             style="background: linear-gradient(135deg, var(--color-warm), #a07850);">
+          5
+        </div>
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-3"
+             style="background-color: var(--color-warm-light);">
+          <i data-lucide="trending-up" class="w-5 h-5" style="color: var(--color-warm);"></i>
+        </div>
+        <h3 class="font-bold text-base mb-2" style="color: var(--color-primary);">継続・伴走</h3>
+        <p class="text-text-muted text-xs leading-relaxed">
+          定期セッションで進捗確認・調整。習慣化まで一緒に走ります。
+        </p>
+      </div>
+
+    </div>
+
+    <!-- コーチング画像 -->
+    <div class="mt-20 rounded-3xl overflow-hidden shadow-2xl relative" data-aos="fade-up">
+      <img
+        src="https://images.unsplash.com/photo-1758272421488-ad09111b44b9?w=1200&q=80&fm=webp&fit=crop"
+        alt="オンラインコーチングセッションのイメージ"
+        loading="lazy"
+        decoding="async"
+        class="w-full h-72 md:h-96 object-cover"
+      >
+      <div class="absolute inset-0 flex items-end p-8"
+           style="background: linear-gradient(to top, rgba(15,38,56,0.85) 0%, transparent 60%);">
+        <p class="text-white text-lg md:text-2xl font-serif font-bold max-w-lg">
+          「あなたの学習環境に合わせた、リアルタイムのサポートを提供します。」
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =====================================================
+     5. 料金プラン
+===================================================== -->
+<section id="pricing" class="py-24 lg:py-32" style="background-color: var(--color-surface-2);">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- セクションヘッダー -->
+    <div class="text-center mb-16" data-aos="fade-up">
+      <p class="section-label mb-3">Pricing</p>
+      <h2 class="font-serif text-3xl md:text-4xl font-bold" style="color: var(--color-primary);">
+        料金プラン
+      </h2>
+      <p class="mt-4 text-text-muted max-w-xl mx-auto">
+        すべてのプランに無料相談が含まれます。<br>まずはお気軽にご相談ください。
+      </p>
+    </div>
+
+    <!-- 料金カード -->
+    <div class="grid md:grid-cols-3 gap-6 items-start">
+
+      <!-- ライトプラン -->
+      <div class="rounded-2xl p-8 bg-white border shadow-sm card-hover"
+           style="border-color: var(--color-surface-2);" data-aos="fade-up" data-aos-delay="0">
+        <p class="section-label mb-2">Light</p>
+        <h3 class="font-serif text-2xl font-bold mb-1" style="color: var(--color-primary);">ライトプラン</h3>
+        <p class="text-text-muted text-sm mb-6">英語学習を始めたい・再開したい方へ</p>
+
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-4xl font-bold" style="color: var(--color-primary);">¥19,800</span>
+          <span class="text-text-muted text-sm">/月（税込）</span>
+        </div>
+
+        <ul class="space-y-3 mb-8 text-sm">
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-accent);"></i>
+            <span>月2回のコーチングセッション（60分）</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-accent);"></i>
+            <span>個別学習プランの設計・提供</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-accent);"></i>
+            <span>テキスト相談（チャット）</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-accent);"></i>
+            <span>学習リソース共有</span>
+          </li>
+          <li class="flex items-start gap-3 text-text-muted">
+            <i data-lucide="minus" class="w-4 h-4 mt-0.5 shrink-0"></i>
+            <span>週次進捗レポート</span>
+          </li>
+        </ul>
+
+        <a href="#contact"
+           class="block w-full text-center font-bold py-3 rounded-full border-2 transition-all hover:bg-primary hover:text-white"
+           style="border-color: var(--color-primary); color: var(--color-primary);">
+          無料相談を申し込む
+        </a>
+      </div>
+
+      <!-- スタンダードプラン（推奨） -->
+      <div class="rounded-2xl p-8 text-white shadow-2xl plan-recommended bg-primary-grad card-hover"
+           data-aos="fade-up" data-aos-delay="100">
+        <!-- 推奨バッジ -->
+        <div class="inline-block px-3 py-1 rounded-full text-xs font-bold mb-4"
+             style="background-color: var(--color-warm); color: var(--color-primary-dark);">
+          おすすめ
+        </div>
+
+        <p class="section-label mb-2" style="color: var(--color-accent-light);">Standard</p>
+        <h3 class="font-serif text-2xl font-bold mb-1">スタンダードプラン</h3>
+        <p class="text-white/70 text-sm mb-6">着実に英語力を伸ばしたい方へ</p>
+
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-4xl font-bold">¥34,800</span>
+          <span class="text-white/70 text-sm">/月（税込）</span>
+        </div>
+
+        <ul class="space-y-3 mb-8 text-sm">
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-warm);"></i>
+            <span>月4回のコーチングセッション（60分）</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-warm);"></i>
+            <span>個別学習プランの設計・定期更新</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-warm);"></i>
+            <span>無制限テキスト相談（チャット）</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-warm);"></i>
+            <span>週次進捗レポート＋フィードバック</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-warm);"></i>
+            <span>学習リソース選定・教材レビュー</span>
+          </li>
+        </ul>
+
+        <a href="#contact"
+           class="block w-full text-center font-bold py-3 rounded-full transition-all hover:opacity-90"
+           style="background-color: var(--color-warm); color: var(--color-primary-dark);">
+          無料相談を申し込む
+        </a>
+      </div>
+
+      <!-- プレミアムプラン -->
+      <div class="rounded-2xl p-8 bg-white border shadow-sm card-hover"
+           style="border-color: var(--color-surface-2);" data-aos="fade-up" data-aos-delay="200">
+        <p class="section-label mb-2">Premium</p>
+        <h3 class="font-serif text-2xl font-bold mb-1" style="color: var(--color-primary);">プレミアムプラン</h3>
+        <p class="text-text-muted text-sm mb-6">集中的に・短期間で結果を出したい方へ</p>
+
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-4xl font-bold" style="color: var(--color-primary);">¥54,800</span>
+          <span class="text-text-muted text-sm">/月（税込）</span>
+        </div>
+
+        <ul class="space-y-3 mb-8 text-sm">
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-accent);"></i>
+            <span>月8回のコーチングセッション（60分）</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-accent);"></i>
+            <span>スタンダード全内容に加えて…</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-accent);"></i>
+            <span>音読・スピーキング録音フィードバック</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-accent);"></i>
+            <span>ライティング添削（週1回まで）</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="check" class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-accent);"></i>
+            <span>優先スケジュール対応</span>
+          </li>
+        </ul>
+
+        <a href="#contact"
+           class="block w-full text-center font-bold py-3 rounded-full border-2 transition-all hover:bg-primary hover:text-white"
+           style="border-color: var(--color-primary); color: var(--color-primary);">
+          無料相談を申し込む
+        </a>
+      </div>
+
+    </div>
+
+    <!-- 注記 -->
+    <p class="text-center text-text-muted text-xs mt-8" data-aos="fade-up">
+      ※ 最低契約期間は3ヶ月です。4ヶ月目以降は月単位で継続できます。<br>
+      ※ 価格はすべて税込表示です。
+    </p>
+
+  </div>
+</section>
+
+
+<!-- =====================================================
+     6. よくある質問（FAQ）
+===================================================== -->
+<section id="faq" class="py-24 lg:py-32" style="background-color: var(--color-surface);">
+  <div class="max-w-3xl mx-auto px-6">
+
+    <!-- セクションヘッダー -->
+    <div class="text-center mb-16" data-aos="fade-up">
+      <p class="section-label mb-3">FAQ</p>
+      <h2 class="font-serif text-3xl md:text-4xl font-bold" style="color: var(--color-primary);">
+        よくある質問
+      </h2>
+    </div>
+
+    <!-- FAQ アイテム -->
+    <div class="space-y-4">
+
+      <!-- Q1 -->
+      <div class="faq-item rounded-xl bg-white border overflow-hidden"
+           style="border-color: var(--color-surface-2);" data-aos="fade-up" data-aos-delay="0">
+        <details class="group">
+          <summary class="flex items-center justify-between p-6 cursor-pointer">
+            <div class="flex items-start gap-4">
+              <span class="font-bold text-sm shrink-0" style="color: var(--color-accent);">Q</span>
+              <span class="font-medium text-sm md:text-base" style="color: var(--color-primary);">
+                英語が超初心者でも受講できますか？
+              </span>
+            </div>
+            <i data-lucide="chevron-down" class="w-5 h-5 shrink-0 transition-transform group-open:rotate-180"
+               style="color: var(--color-text-muted);"></i>
+          </summary>
+          <div class="px-6 pb-6 pl-14 text-sm text-text-muted leading-relaxed">
+            はい、まったく問題ありません。初心者の方こそ、最初から正しいメソッドで学ぶことが大切です。
+            あなたの現在のレベルから始められるプランを設計します。
+          </div>
+        </details>
+      </div>
+
+      <!-- Q2 -->
+      <div class="faq-item rounded-xl bg-white border overflow-hidden"
+           style="border-color: var(--color-surface-2);" data-aos="fade-up" data-aos-delay="50">
+        <details class="group">
+          <summary class="flex items-center justify-between p-6 cursor-pointer">
+            <div class="flex items-start gap-4">
+              <span class="font-bold text-sm shrink-0" style="color: var(--color-accent);">Q</span>
+              <span class="font-medium text-sm md:text-base" style="color: var(--color-primary);">
+                1日どれくらいの学習時間が必要ですか？
+              </span>
+            </div>
+            <i data-lucide="chevron-down" class="w-5 h-5 shrink-0 transition-transform group-open:rotate-180"
+               style="color: var(--color-text-muted);"></i>
+          </summary>
+          <div class="px-6 pb-6 pl-14 text-sm text-text-muted leading-relaxed">
+            最初のヒアリングで「使える時間」を確認し、それに合わせたプランを設計します。
+            1日15分でも継続できる設計から始めることが可能です。
+            量より質・継続性を重視したプランを作ります。
+          </div>
+        </details>
+      </div>
+
+      <!-- Q3 -->
+      <div class="faq-item rounded-xl bg-white border overflow-hidden"
+           style="border-color: var(--color-surface-2);" data-aos="fade-up" data-aos-delay="100">
+        <details class="group">
+          <summary class="flex items-center justify-between p-6 cursor-pointer">
+            <div class="flex items-start gap-4">
+              <span class="font-bold text-sm shrink-0" style="color: var(--color-accent);">Q</span>
+              <span class="font-medium text-sm md:text-base" style="color: var(--color-primary);">
+                コーチングセッションはどうやって行いますか？
+              </span>
+            </div>
+            <i data-lucide="chevron-down" class="w-5 h-5 shrink-0 transition-transform group-open:rotate-180"
+               style="color: var(--color-text-muted);"></i>
+          </summary>
+          <div class="px-6 pb-6 pl-14 text-sm text-text-muted leading-relaxed">
+            Zoom または Google Meet を使用したオンラインセッションです。
+            パソコン・スマートフォン・タブレットから参加できます。
+            専用ソフトのインストールは不要です。
+          </div>
+        </details>
+      </div>
+
+      <!-- Q4 -->
+      <div class="faq-item rounded-xl bg-white border overflow-hidden"
+           style="border-color: var(--color-surface-2);" data-aos="fade-up" data-aos-delay="150">
+        <details class="group">
+          <summary class="flex items-center justify-between p-6 cursor-pointer">
+            <div class="flex items-start gap-4">
+              <span class="font-bold text-sm shrink-0" style="color: var(--color-accent);">Q</span>
+              <span class="font-medium text-sm md:text-base" style="color: var(--color-primary);">
+                英会話だけでなく、TOEICスコアアップにも対応できますか？
+              </span>
+            </div>
+            <i data-lucide="chevron-down" class="w-5 h-5 shrink-0 transition-transform group-open:rotate-180"
+               style="color: var(--color-text-muted);"></i>
+          </summary>
+          <div class="px-6 pb-6 pl-14 text-sm text-text-muted leading-relaxed">
+            はい、対応可能です。TOEIC対策もSLAの観点から設計します。
+            ただし、スコアアップだけでなく「本当に使える英語力」を身につけることを前提に
+            プログラムを設計します。試験対策と実用的な英語力は両立できます。
+          </div>
+        </details>
+      </div>
+
+      <!-- Q5 -->
+      <div class="faq-item rounded-xl bg-white border overflow-hidden"
+           style="border-color: var(--color-surface-2);" data-aos="fade-up" data-aos-delay="200">
+        <details class="group">
+          <summary class="flex items-center justify-between p-6 cursor-pointer">
+            <div class="flex items-start gap-4">
+              <span class="font-bold text-sm shrink-0" style="color: var(--color-accent);">Q</span>
+              <span class="font-medium text-sm md:text-base" style="color: var(--color-primary);">
+                途中でプランの変更はできますか？
+              </span>
+            </div>
+            <i data-lucide="chevron-down" class="w-5 h-5 shrink-0 transition-transform group-open:rotate-180"
+               style="color: var(--color-text-muted);"></i>
+          </summary>
+          <div class="px-6 pb-6 pl-14 text-sm text-text-muted leading-relaxed">
+            学習の進捗・生活環境の変化に応じて、プランは柔軟に調整できます。
+            翌月からのプラン変更（アップグレード・ダウングレード）も承ります。
+            まずはご相談ください。
+          </div>
+        </details>
+      </div>
+
+      <!-- Q6 -->
+      <div class="faq-item rounded-xl bg-white border overflow-hidden"
+           style="border-color: var(--color-surface-2);" data-aos="fade-up" data-aos-delay="250">
+        <details class="group">
+          <summary class="flex items-center justify-between p-6 cursor-pointer">
+            <div class="flex items-start gap-4">
+              <span class="font-bold text-sm shrink-0" style="color: var(--color-accent);">Q</span>
+              <span class="font-medium text-sm md:text-base" style="color: var(--color-primary);">
+                SLA（第二言語獲得）ってどういうものですか？
+              </span>
+            </div>
+            <i data-lucide="chevron-down" class="w-5 h-5 shrink-0 transition-transform group-open:rotate-180"
+               style="color: var(--color-text-muted);"></i>
+          </summary>
+          <div class="px-6 pb-6 pl-14 text-sm text-text-muted leading-relaxed">
+            SLA（Second Language Acquisition）は、人間が第二言語を習得する仕組みを研究する学問領域です。
+            「大量のインプットが重要」「ストレスのない環境で習得が進む」「実際のコミュニケーションが定着を助ける」など、
+            科学的に裏付けられた知見を学習設計に活かします。
+          </div>
+        </details>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =====================================================
+     7. 無料相談 CTA
+===================================================== -->
+<section id="contact" class="py-24 lg:py-32 bg-primary-grad text-white relative overflow-hidden">
+  <!-- 装飾 -->
+  <div class="absolute top-0 right-0 w-80 h-80 rounded-full opacity-5"
+       style="background: radial-gradient(circle, white, transparent); transform: translate(20%, -20%);"></div>
+  <div class="absolute bottom-0 left-0 w-60 h-60 rounded-full opacity-5"
+       style="background: radial-gradient(circle, white, transparent); transform: translate(-20%, 20%);"></div>
+
+  <div class="max-w-3xl mx-auto px-6 relative z-10">
+
+    <!-- ヘッダー -->
+    <div class="text-center mb-12" data-aos="fade-up">
+      <p class="section-label mb-3" style="color: var(--color-accent-light);">Free Consultation</p>
+      <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">
+        まず、30分の無料相談から<br>始めてみませんか？
+      </h2>
+      <p class="text-white/70 leading-relaxed">
+        現在の悩みや目標をお聞きし、あなたに合った学習方針をお伝えします。<br>
+        売り込みは一切ありません。お気軽にどうぞ。
+      </p>
+    </div>
+
+    <!-- フォーム -->
+    <form class="rounded-2xl p-8 bg-white/5 border border-white/10 space-y-5" data-aos="fade-up" data-aos-delay="100"
+          onsubmit="handleFormSubmit(event)">
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <!-- お名前 -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-white/80 mb-2">
+            お名前 <span class="text-red-400">*</span>
+          </label>
+          <input
+            type="text" id="name" name="name" required
+            placeholder="山田 太郎"
+            class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-accent-light focus:bg-white/15 transition-all text-sm"
+          >
+        </div>
+
+        <!-- メールアドレス -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-white/80 mb-2">
+            メールアドレス <span class="text-red-400">*</span>
+          </label>
+          <input
+            type="email" id="email" name="email" required
+            placeholder="example@email.com"
+            class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-accent-light focus:bg-white/15 transition-all text-sm"
+          >
+        </div>
+      </div>
+
+      <!-- 現在のレベル -->
+      <div>
+        <label for="level" class="block text-sm font-medium text-white/80 mb-2">
+          現在の英語レベル（目安）
+        </label>
+        <select
+          id="level" name="level"
+          class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-accent-light transition-all text-sm"
+        >
+          <option value="" class="text-gray-800">選択してください</option>
+          <option value="beginner" class="text-gray-800">初心者（ほぼゼロから）</option>
+          <option value="elementary" class="text-gray-800">初級（中学英語レベル）</option>
+          <option value="intermediate" class="text-gray-800">中級（日常会話ができる）</option>
+          <option value="advanced" class="text-gray-800">上級（ビジネス英語を目指したい）</option>
+        </select>
+      </div>
+
+      <!-- 目標 -->
+      <div>
+        <label for="goal" class="block text-sm font-medium text-white/80 mb-2">
+          英語学習の目標・ご相談内容 <span class="text-red-400">*</span>
+        </label>
+        <textarea
+          id="goal" name="goal" required rows="4"
+          placeholder="例：洋書をスラスラ読めるようになりたい、海外出張で英語を使えるようになりたい、TOEICスコアを上げたい、など"
+          class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-accent-light focus:bg-white/15 transition-all text-sm resize-none"
+        ></textarea>
+      </div>
+
+      <!-- 送信ボタン -->
+      <button
+        type="submit"
+        class="w-full font-bold py-4 rounded-full text-base transition-all hover:opacity-90 hover:scale-[1.02] flex items-center justify-center gap-2"
+        style="background-color: var(--color-warm); color: var(--color-primary-dark);">
+        <i data-lucide="send" class="w-5 h-5"></i>
+        無料相談を申し込む（30分・完全無料）
+      </button>
+
+      <p class="text-center text-white/50 text-xs">
+        ※ 個人情報は厳重に管理し、相談目的以外には使用しません。
+      </p>
+
+    </form>
+
+    <!-- 送信完了メッセージ（非表示） -->
+    <div id="form-success" class="hidden mt-6 rounded-xl p-6 text-center"
+         style="background-color: rgba(74, 143, 168, 0.2); border: 1px solid rgba(74, 143, 168, 0.4);">
+      <i data-lucide="check-circle" class="w-10 h-10 mx-auto mb-3" style="color: var(--color-accent-light);"></i>
+      <p class="font-bold text-lg mb-1">ありがとうございます！</p>
+      <p class="text-white/70 text-sm">
+        送信が完了しました。2営業日以内にご連絡いたします。
+      </p>
+    </div>
+
+  </div>
+</section>

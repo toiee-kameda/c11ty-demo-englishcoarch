@@ -1,16 +1,297 @@
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ title or "cc11ty" }}</title>
-  </head>
-  <body>
-    <header>
-      <a href="/">Home</a>
-    </header>
-    <main>
-      {{ content | safe }}
-    </main>
-  </body>
+<!DOCTYPE html>
+<html lang="{{ lang or 'ja' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ description or '' }}">
+  <meta property="og:title" content="{{ title or 'SLA英語コーチング' }}">
+  <meta property="og:description" content="{{ description or '' }}">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1762341115358-44dd9d3c49cc?w=1200&q=80&fm=webp&fit=crop">
+  <meta property="og:type" content="website">
+  <title>{{ title or "SLA英語コーチング | あなただけの学習メソッドで英語を習得" }}</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
+  <!-- Tailwind CSS v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* ===== カラーパレット ===== */
+      --color-primary:   #1a3a52;
+      --color-primary-dark: #0f2638;
+      --color-primary-light: #2a5272;
+      --color-accent:    #4a8fa8;
+      --color-accent-light: #7ab5cc;
+      --color-warm:      #c8a97e;
+      --color-warm-light: #e8d5b7;
+      --color-surface:   #f7f5f0;
+      --color-surface-2: #edeae3;
+      --color-text:      #1c1c2e;
+      --color-text-muted: #6b7280;
+
+      /* ===== フォント ===== */
+      --font-sans: 'Noto Sans JP', sans-serif;
+      --font-serif: 'Noto Serif JP', serif;
+    }
+
+    /* ===== ベーススタイル ===== */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-text);
+      background-color: var(--color-surface);
+      line-height: 1.8;
+    }
+
+    /* ===== ナビゲーション ===== */
+    .nav-scrolled {
+      background-color: rgba(26, 58, 82, 0.92);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ===== セクション見出し ===== */
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 500;
+    }
+
+    /* ===== ボーダーアクセント ===== */
+    .border-accent-left {
+      border-left: 3px solid var(--color-warm);
+    }
+
+    /* ===== カード ===== */
+    .card-hover {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(26, 58, 82, 0.12);
+    }
+
+    /* ===== グラデーション背景 ===== */
+    .bg-primary-grad {
+      background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    }
+    .bg-accent-grad {
+      background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary-light) 100%);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     ナビゲーション
+===================================================== -->
+<nav id="main-nav" aria-label="メインナビゲーション"
+     class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+    <!-- ロゴ -->
+    <a href="/" class="nav-link flex items-center gap-2 font-bold text-white text-lg tracking-wide">
+      <i data-lucide="book-open" class="w-5 h-5"></i>
+      <span class="font-serif">SLA English</span>
+    </a>
+
+    <!-- デスクトップメニュー -->
+    <ul class="hidden lg:flex items-center gap-8 text-sm font-medium">
+      <li><a href="#pain" class="nav-link text-white/80 hover:text-white transition-colors">お悩み</a></li>
+      <li><a href="#features" class="nav-link text-white/80 hover:text-white transition-colors">選ばれる理由</a></li>
+      <li><a href="#flow" class="nav-link text-white/80 hover:text-white transition-colors">サービスの流れ</a></li>
+      <li><a href="#pricing" class="nav-link text-white/80 hover:text-white transition-colors">料金</a></li>
+      <li><a href="#faq" class="nav-link text-white/80 hover:text-white transition-colors">FAQ</a></li>
+      <li>
+        <a href="#contact"
+           class="font-bold px-5 py-2 rounded-full text-sm hover:opacity-90 transition-opacity"
+           style="background-color: var(--color-warm); color: var(--color-primary-dark);">
+          無料相談
+        </a>
+      </li>
+    </ul>
+
+    <!-- モバイルメニューボタン -->
+    <button id="menu-btn" class="lg:hidden text-white p-2"
+            aria-expanded="false" aria-controls="mobile-menu" aria-label="メニューを開く">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+
+  <!-- モバイルメニュー -->
+  <div id="mobile-menu" class="hidden lg:hidden"
+       style="background-color: rgba(15, 38, 56, 0.97); backdrop-filter: blur(12px);">
+    <ul class="flex flex-col px-6 py-5 gap-5 text-white text-sm font-medium">
+      <li><a href="#pain" class="block hover:text-accent-light transition-colors">お悩み</a></li>
+      <li><a href="#features" class="block hover:text-accent-light transition-colors">選ばれる理由</a></li>
+      <li><a href="#flow" class="block hover:text-accent-light transition-colors">サービスの流れ</a></li>
+      <li><a href="#pricing" class="block hover:text-accent-light transition-colors">料金</a></li>
+      <li><a href="#faq" class="block hover:text-accent-light transition-colors">FAQ</a></li>
+      <li>
+        <a href="#contact"
+           class="inline-block font-bold px-6 py-3 rounded-full text-center w-full"
+           style="background-color: var(--color-warm); color: var(--color-primary-dark);">
+          無料相談を申し込む
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ===== メインコンテンツ ===== -->
+<main class="pt-16 lg:pt-20">
+  {{ content | safe }}
+</main>
+
+
+<!-- =====================================================
+     フッター
+===================================================== -->
+<footer class="py-12" style="background-color: var(--color-primary-dark);">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+
+      <!-- ロゴ -->
+      <div class="flex items-center gap-2 text-white font-bold text-lg font-serif">
+        <i data-lucide="book-open" class="w-5 h-5"></i>
+        SLA English Coaching
+      </div>
+
+      <!-- ナビ -->
+      <nav aria-label="フッターナビゲーション">
+        <ul class="flex flex-wrap justify-center gap-6 text-white/60 text-sm">
+          <li><a href="#pain" class="hover:text-white transition-colors">お悩み</a></li>
+          <li><a href="#features" class="hover:text-white transition-colors">選ばれる理由</a></li>
+          <li><a href="#pricing" class="hover:text-white transition-colors">料金</a></li>
+          <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+          <li><a href="#contact" class="hover:text-white transition-colors">無料相談</a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <hr class="my-8 border-white/10">
+
+    <!-- コピーライト & Unsplash クレジット -->
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-white/40 text-xs">
+      <p>&copy; 2026 SLA English Coaching. All rights reserved.</p>
+      <p>
+        Photos by
+        <a href="https://unsplash.com/@zulfu?utm_source=sla-english&utm_medium=referral" class="underline hover:text-white/70" target="_blank" rel="noopener">Zulfugar Karimov</a>,
+        <a href="https://unsplash.com/@vitalygariev?utm_source=sla-english&utm_medium=referral" class="underline hover:text-white/70" target="_blank" rel="noopener">Vitaly Gariev</a>,
+        <a href="https://unsplash.com/@ductrinh?utm_source=sla-english&utm_medium=referral" class="underline hover:text-white/70" target="_blank" rel="noopener">Đức Trịnh</a>
+        on <a href="https://unsplash.com?utm_source=sla-english&utm_medium=referral" class="underline hover:text-white/70" target="_blank" rel="noopener">Unsplash</a>
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- =====================================================
+     ライブラリ読み込み & スクリプト
+===================================================== -->
+<!-- Lucide アイコン -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<!-- AOS スクロールアニメーション -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+  // ===== アイコン初期化 =====
+  lucide.createIcons();
+
+  // ===== AOS 初期化 =====
+  AOS.init({ duration: 700, once: true, offset: 60 });
+
+  // ===== ナビゲーション: スクロール時の背景切替 =====
+  const nav = document.getElementById('main-nav');
+  let ticking = false;
+
+  function onScroll() {
+    if (window.scrollY > 50) {
+      nav.classList.add('nav-scrolled');
+      nav.querySelectorAll('.nav-link').forEach(el => {
+        el.classList.remove('text-white', 'text-white/80');
+        el.classList.add('text-white');
+      });
+    } else {
+      nav.classList.remove('nav-scrolled');
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  });
+
+  // ===== モバイルメニュー開閉 =====
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('hidden') === false;
+    menuBtn.setAttribute('aria-expanded', String(isOpen));
+    menuBtn.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+    menuBtn.innerHTML = isOpen
+      ? '<i data-lucide="x" class="w-6 h-6"></i>'
+      : '<i data-lucide="menu" class="w-6 h-6"></i>';
+    lucide.createIcons();
+  });
+
+  // モバイルメニューのリンクをクリックしたら閉じる
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.setAttribute('aria-label', 'メニューを開く');
+      menuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+      lucide.createIcons();
+    });
+  });
+
+  // ===== フォーム送信処理（デモ） =====
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const successMsg = document.getElementById('form-success');
+    form.style.display = 'none';
+    successMsg.classList.remove('hidden');
+    lucide.createIcons();
+  }
+
+  // ===== FAQ: details/summary アコーディオン動作 =====
+  document.querySelectorAll('.faq-item details').forEach(details => {
+    details.addEventListener('toggle', () => {
+      document.querySelectorAll('.faq-item details[open]').forEach(other => {
+        if (other !== details) other.removeAttribute('open');
+      });
+    });
+  });
+</script>
+
+</body>
 </html>
